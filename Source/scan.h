@@ -4,32 +4,31 @@
 # include "type.h"
 
 /* define DFA state*/
-typedef enum{
-    /* start state s0*/
-    start,
-    /* WHILE's middle state and accept state*/
-    mw, mwh, mwhi, mwhil, WHILE,
-    /* IF's middle state and accept state*/
-    mi, IF,
+typedef enum dfa_state{
+    While, If, Then, Else, Do, Plus, Minus, Times, Divide, Lp, Rp, Equal, Assign, Lt, Gt, Semi,
+    Int10, Int8, Int16, f10, f8, f16, Id, Error,
+    /* WHILE's middle state*/
+    mw, mwh, mwhi, mwhil,
+    /* IF's middle state*/
+    mi,
     /* THEN's middle state and accept state*/
-    mt, mth, mthe, THEN,
+    mt, mth, mthe,
     /* ELSE's middle state and accept state*/
-    me, mel, mels, ELSE,
+    me, mel, mels,
     /* DO's middle state and accept state*/
-    md, DO,
+    md,
     /* Special number's middle state and accept state */
     /* +, -, *, /, (, ), ==, =, <, >, ; 这里 = 与 == 之间存在转换关系 */ 
-    PLUS, MINUS, TIMES, DIVIDE, LP, RP, EQUAL, ASSIGN, LT, GT, SEMI,
     /* Integer Number's middle state and accept state */
-    zero, INT10, ox, INT16, INT8,
+    zero, ox,
     /* Integer Number's middle state and accept state */
-    dtf, F10, htf, F16, otf, F8,
+    dtf, htf, otf,
     /* Identifier's middle state and accept state */
-    ID,
+    /* start state s0*/
+    start,
     /* Error state*/
-    ERROR,
     /*END File*/
-    END
+    End
 }State;
 
 FILE * read;
@@ -51,16 +50,16 @@ TokenType getToken();
 
 /* check if the character is in range x to y in ascii*/
 /* 0-9 1-9 0-7 a-z A-Z*/
-inline int In_range( char temp, char x, char y);
+int In_range( char temp, char x, char y);
 
 /*判断在中间状态下 是否为间隔符*/
-inline int Isinter( char temp);
+int Isinter( char temp);
 
 /*判断是否为ID状态下的合法字符*/
-inline int Isid( char temp );
+int Isid( char temp );
 
 /* print token type */
-void printToken( TokenType token);
+void printToken( State );
 
 /* print input string */
 void printString();

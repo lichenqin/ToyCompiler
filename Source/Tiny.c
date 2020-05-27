@@ -16,9 +16,9 @@ int main( int argc, char * argv[] ){
     }
     
     const char * filename = (const char *)argv[1];
-    const char * outfile = (const char *)str_conjunction(argv[1],".out");
+    char * outfile = str_conjunction(argv[1],".out");
 
-    const char * filename = (const char *) argv[1];
+    char * filename = argv[1];
     read = fopen(filename, "rb");
     if( read == NULL){
         prinf("Can't open this file: %s", argv[1]);

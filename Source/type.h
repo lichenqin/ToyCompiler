@@ -7,7 +7,7 @@
 
 
 //define Token Type
-typedef enum{
+typedef enum token{
     /* Reserve Word*/
     WHILE, IF, THEN, ELSE, DO,
     /* Special Symbol*/

@@ -57,6 +57,32 @@ void printToken( TokenType object ){
     printf("%s\n",tokenTable[object]);
 }
 
+/* 定义In_range内联函数*/
+int In_range( char temp, char x, char y){
+    if( temp >= x && temp <= y)
+        return 1;
+    else
+        return 0;
+}
+
+/* 判断间隔符*/
+int Isinter(char temp){
+    if( In_range(temp,'(','+') || In_range(temp,';','>')) return 1;
+    else if ( temp == '-' || temp == '/' )              return 1;
+    else if ( temp == '\n' || temp == ' ' || temp == '\t')  return 1;
+    else return 0;
+}
+
+/*If it's legal word*/
+int Isid( char temp ){
+    if( In_range(temp, '0','9') || In_range(temp, 'a','z') || In_range(temp,'A','Z'))
+        return 1;
+    else if( temp == '_')
+        return 1;
+    else
+        return 0;
+}
+
 int main( int argc, char * argv[]){
 
     if( argc != 2){
@@ -65,7 +91,7 @@ int main( int argc, char * argv[]){
     }
 
     const char * filename = (const char *)argv[1];
-    //const char * outfile = (const char *)str_conjunction(argv[1],".out");
+    char * outfile = str_conjunction(argv[1],".out");
 
     FILE * read = fopen(filename, "rb");
     if( read == NULL ){
@@ -73,26 +99,29 @@ int main( int argc, char * argv[]){
         exit(1);
     }
 
-    // FILE * out = fopen(outfile, "w")
-    // if( out == NULL ){
-    //     printf("Can't record.\n");
-    //     exit(1);
-    // }
+    FILE * out = fopen(outfile, "w");
+    if( out == NULL ){
+        printf("Can't record.\n");
+        exit(1);
+    }
     
     //char array[16] = {}; //如果定义buff最大为16 那每行的实际字符为14个
     int temp = 0;
     while( (temp = fgetc(read)) != -1 ){
-        printf("%c",temp);
+        if( Isid(temp) ){
+            printf("%c is id\n",temp);
+            fprintf(out,"%c",temp);
+        }
     }
     printf("End of File\n");
 
 
     /*Close file handle*/
     fclose(read);
-    //fclose(out);
+    fclose(out);
 
     /*free heap*/
-    //free(outfile);
+    free(outfile);
 
     return 0;
 }
