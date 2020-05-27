@@ -8,24 +8,28 @@ typedef enum{
     /* start state s0*/
     start,
     /* WHILE's middle state and accept state*/
-    W, WH, WHI, WHIL, WHILE,
+    mw, mwh, mwhi, mwhil, WHILE,
     /* IF's middle state and accept state*/
-    I, IF,
+    mi, IF,
     /* THEN's middle state and accept state*/
-    T, TH, THE, THEN,
+    mt, mth, mthe, THEN,
     /* ELSE's middle state and accept state*/
-    E, EL, ELS, ELSE,
+    me, mel, mels, ELSE,
     /* DO's middle state and accept state*/
-    D, DO,
+    md, DO,
     /* Special number's middle state and accept state */
     /* +, -, *, /, (, ), ==, =, <, >, ; 这里 = 与 == 之间存在转换关系 */ 
-    PLUS, MINUS, TIMES, DIVIDE, LP, RP, EQUAL，ASSIGN, LT, GT, SEMI,
+    PLUS, MINUS, TIMES, DIVIDE, LP, RP, EQUAL, ASSIGN, LT, GT, SEMI,
     /* Integer Number's middle state and accept state */
-    ZERO, INT10, OX, INT16, INT8,
+    zero, INT10, ox, INT16, INT8,
     /* Integer Number's middle state and accept state */
-    DTF, F10, HTF, F16, OTF, F8,
+    dtf, F10, htf, F16, otf, F8,
     /* Identifier's middle state and accept state */
-    ID_, ID
+    ID,
+    /* Error state*/
+    ERROR,
+    /*END File*/
+    END
 }State;
 
 FILE * read;
@@ -47,7 +51,13 @@ TokenType getToken();
 
 /* check if the character is in range x to y in ascii*/
 /* 0-9 1-9 0-7 a-z A-Z*/
-inline bool In_range( char temp, char x, char y);
+inline int In_range( char temp, char x, char y);
+
+/*判断在中间状态下 是否为间隔符*/
+inline int Isinter( char temp);
+
+/*判断是否为ID状态下的合法字符*/
+inline int Isid( char temp );
 
 /* print token type */
 void printToken( TokenType token);

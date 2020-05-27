@@ -18,9 +18,11 @@ typedef enum{
     /* Float Decimal Octal Hex*/
     FLO10, FLO8, FLO16,
     /* Identifier*/
-    ID, ID_,
+    ID,
     /* Error*/
     ERROR,
+    /* Interval*/
+    INTER,
     /* End File*/
     ENDFI
 }TokenType;

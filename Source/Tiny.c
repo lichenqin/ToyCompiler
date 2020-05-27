@@ -25,7 +25,7 @@ int main( int argc, char * argv[] ){
         exit(1);
     }
 
-    output = fopen(outfile, "w")
+    output = fopen(outfile, "w");
     if( output == NULL ){
         printf("Can't record.\n");
         exit(1);
@@ -33,7 +33,7 @@ int main( int argc, char * argv[] ){
 
     /* Scanner Part*/
 
-    while( getToken() != 0 );
+    while( getToken() != ENDFI );
 
     /* Parser Part*/
 

@@ -79,18 +79,13 @@ int main( int argc, char * argv[]){
     //     exit(1);
     // }
     
-    char array[16] = {}; //如果定义buff最大为16 那每行的实际字符为14个
-    fgets(array, 16, read); //\n
-    //printf("%c%c", array[14], array[15]);
+    //char array[16] = {}; //如果定义buff最大为16 那每行的实际字符为14个
+    int temp = 0;
+    while( (temp = fgetc(read)) != -1 ){
+        printf("%c",temp);
+    }
+    printf("End of File\n");
 
-    //char temp = fgetc(read);
-    //printf("%c\n",temp);
-
-    if( feof(read) )
-        printf("end of file\n");
-
-    if (fgets(array, 16, read) == NULL)
-        printf("fgets end of file\n"); //这里说明问题 feof由于linux的设置问题 不可能第一时间获取信息 但fgets可以
 
     /*Close file handle*/
     fclose(read);
