@@ -42,3 +42,52 @@ Test中有:
 
 也可通过调用 `getToken()` 函数，单次获取一个Token的对应信息。
 
+#### BNF语法:
+
+添加了三个新的关键字: `end` `in` `out`
+
+
+
+start -->	statement_sequence
+
+statement_sequence -->	statement_sequence; statement| statement
+
+statement --> if-stm | while-stm | in-stm | out-stm | p0
+
+if-stm --> `if` exp-stm `then` statement_sequence `end`
+
+​				| `if` exp-stm `then` statement_sequence `else` statement_sequence `end`
+
+while-stm -->	`while` exp-stmt `do` statement_sequence `end`
+
+in-stm -->	in `ID`
+
+out-stm --> out `ID`
+
+​					| out `number`
+
+p0 -->	p0 assign p0 | p1
+
+assign -->	`=`
+
+p1 -->	p1 equal p1 | p2
+
+equal -->	`==`
+
+p2 -->	p2 compare p2 | p3
+
+compare -->	`>` | `<`
+
+p3 -->	p3 addop p3 | p4
+
+addop -->	`+` | `-`
+
+p4 -->	p4 mulop p4 | p5
+
+mulop -->	`*` | `/`
+
+p5 -->	`(` p0 `)` | `number` | `ID`
+
+
+
+> 尚未进行去除左递归工作，去除左递归后，进行LL(1)语义分析，构建first_follow集
