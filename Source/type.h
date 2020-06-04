@@ -9,7 +9,7 @@
 //define Token Type
 typedef enum token{
     /* Reserve Word*/
-    WHILE, IF, THEN, ELSE, DO,
+    WHILE, IF, THEN, ELSE, DO, END, IN, OUT,    /*add three new reserve word: end, in, out*/
     /* Special Symbol*/
     //PLUS, SUB, MULTIPLE, DIVIDE, BIGGER, LESSER, ASSIGN, EQUAL, SEMI,
     PLUS, MINUS, TIMES, DIVIDE, LP, RP, EQUAL, ASSIGN, LT, GT, SEMI,

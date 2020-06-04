@@ -14,7 +14,8 @@ char Line_buffer[Max_Line];
 int line_position = 0;
 
 /* 建立token类型表*/
-const char * tokenTable[24]={"WHILE", "IF", "THEN", "ELSE", "DO",
+/* 添加了三个新关键字: end, in, out*/
+const char * tokenTable[27]={"WHILE", "IF", "THEN", "ELSE", "DO", "END", "IN", "OUT",
                     "PLUS", "MINUS", "TIMES", "DIVID", "LP", "RP", "EQUAL", "ASIGN", "LT", "GT", "SEMI",
                     "INT10", "INT8", "INT16",
                     "FLO10", "FLO8", "FLO16",
@@ -97,13 +98,18 @@ TokenType getToken(){
 
         save = True;
 
+        /*There are three case for this judgement:
+        /*1: When the first read is EOF, accept return EOF
+        /*2: When pre_string has already existed, and pre_reads are all inter, accept return EOF
+        /*3: When pre_string has already existed and it's not empty, don't save this character, accept return Error | current_state
+        */
         if( (temp=fgetc(read)) != -1)   convert = (char)temp;
         else{
             if( current_state != start ){
                 save = False;
             }
             else{
-                current_state = End;
+                current_state = Eof;    //go to Eof state
             }
             //current_state = End;
         }
@@ -115,14 +121,15 @@ TokenType getToken(){
                 else if( In_range(convert,'1','9'))
                     current_state = Int10;
                 else if( In_range(convert,'a','z') || In_range(convert, 'A','Z')){
-                    if( convert == 'd') current_state = md;
-                    else if( convert == 'e')    current_state = me;
-                    else if( convert == 'i')    current_state = mi;
-                    else if( convert == 't')    current_state = mt;
-                    else if( convert == 'w')    current_state = mw;
+                    if( convert == 'd') current_state = md;         //do
+                    else if( convert == 'e')    current_state = me; //else or end
+                    else if( convert == 'i')    current_state = mi; //if or in
+                    else if( convert == 't')    current_state = mt; //then
+                    else if( convert == 'w')    current_state = mw; //while
+                    else if( convert == 'o')    current_state = mo; //out
                     else                        current_state = Id;
                 }
-                else if( Inrange(convert,'(','+') || In_range(convert,';','>') || convert=='-' || convert=='/'){
+                else if( In_range(convert,'(','+') || In_range(convert,';','>') || convert=='-' || convert=='/'){
                     if( convert=='+')  current_state = Plus;
                     else if( convert=='-')  current_state = Minus;
                     else if( convert=='*')  current_state = Times;
@@ -255,6 +262,7 @@ TokenType getToken(){
                 
                 accept = True;
                 break;
+            /*Following: Reserve word and ID*/
             case md:
                 if( convert == 'o') current_state = Do;
                 else if( Isid(convert))     current_state = Id;
@@ -265,7 +273,7 @@ TokenType getToken(){
                 }
                 else    current_state = Error;
                 break;
-            case Do:
+            case Do:                                    //accept state Do
                 if( Isid(convert) ) current_state = Id;
                 else if( Isinter(convert)){
                     current_state = Do;
@@ -274,7 +282,8 @@ TokenType getToken(){
                 else    current_state = Error;
                 break;
             case me:
-                if( convert == 'l') current_state = mel;
+                if( convert == 'l') current_state = mel;        //go to Else
+                else if( convert == 'n') current_state = men;   //go to End
                 else if( Isid(convert) )    current_state = Id;
                 else if( Isinter(convert)){
                     current_state = Id;
@@ -303,7 +312,7 @@ TokenType getToken(){
                 }
                 else    current_state = Error;
                 break;
-            case Else:
+            case Else:                                  //accept state Else
                 if( Isid(convert) ) current_state = Id;
                 else if( Isinter(convert)){
                     current_state = Else;
@@ -312,8 +321,57 @@ TokenType getToken(){
                 }
                 else    current_state = Error;
                 break;
+            case men:
+                if( convert == 'd') current_state = End;
+                else if( Isid(convert) )    current_state = Id;
+                else if( Isinter(convert)){
+                    current_state = Id;
+                    accept = True;
+                    save = False;
+                }
+                else    current_state = Error;
+                break;
+            case End:                                   //accept state End
+                if( Isid(convert) ) current_state = Id;
+                else if( Isinter(convert)){
+                    current_state = End;
+                    accept = True;
+                    save = False;
+                }
+                else    current_state = Error;
+                break;
+            case mo:
+                if( convert == 'u') current_state = mou;
+                else if( Isid(convert) )    current_state = Id;
+                else if( Isinter(convert)){
+                    current_state = Id;
+                    accept = True;
+                    save = False;
+                }
+                else    current_state = Error;
+                break;
+            case mou:
+                if( convert == 't') current_state = Out;
+                else if( Isid(convert) )    current_state = Id;
+                else if( Isinter(convert)){
+                    current_state = Id;
+                    accept = True;
+                    save = False;
+                }
+                else    current_state = Error;
+                break;
+            case Out:                                   //accept state out
+                if( Isid(convert) ) current_state = Id;
+                else if( Isinter(convert)){
+                    current_state = Out;
+                    accept = True;
+                    save = False;
+                }
+                else    current_state = Error;
+                break;
             case mi:
                     if( convert == 'f') current_state = If;
+                    else if( convert == 'n') current_state = In;
                     else if( Isid(convert) )    current_state = Id;
                     else if( Isinter(convert)){
                         current_state = Id;
@@ -322,10 +380,19 @@ TokenType getToken(){
                     }
                     else    current_state = Error;
                     break;
-            case If:
+            case If:                                    //accept state If
                 if( Isid(convert) ) current_state = Id;
                 else if( Isinter(convert)){
                     current_state = If;
+                    accept = True;
+                    save = False;
+                }
+                else    current_state = Error;
+                break;
+            case In:                                    //accept state In
+                if( Isid(convert) ) current_state = Id;
+                else if( Isinter(convert)){
+                    current_state = In;
                     accept = True;
                     save = False;
                 }
@@ -360,7 +427,7 @@ TokenType getToken(){
                 }
                 else    current_state = Error;
                 break;
-            case Then:
+            case Then:                                  //accept state Then
                 if( Isid(convert) ) current_state = Id;
                 else if( Isinter(convert)){
                     current_state = Then;
@@ -408,7 +475,7 @@ TokenType getToken(){
                 }
                 else    current_state = Error;
                 break;
-            case While:
+            case While:                                 //accept state While
                 if( Isid(convert) ) current_state = Id;
                 else if( Isinter(convert)){
                     current_state = While;
@@ -436,7 +503,7 @@ TokenType getToken(){
                     current_state = Error;
                 }
                 break;
-            case End:
+            case Eof:
                 return ENDFI;
             default:
                 break;            
