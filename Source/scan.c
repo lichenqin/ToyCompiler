@@ -516,9 +516,11 @@ TokenType getToken(){
                 //多出来的部分不计入
             }
         }
-        else{
-            if( accept == True )
+        else{   //此时选择不保存此符号，那么应该回溯指针
+            if( accept == True ){
                 String_buffer[string_position] = '\0';
+                fseek(read,-1,SEEK_CUR);//前移一
+            }
         }
 
     }
