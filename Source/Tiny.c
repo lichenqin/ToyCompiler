@@ -18,10 +18,9 @@ int main( int argc, char * argv[] ){
     const char * filename = (const char *)argv[1];
     char * outfile = str_conjunction(argv[1],".out");
 
-    char * filename = argv[1];
     read = fopen(filename, "rb");
     if( read == NULL){
-        prinf("Can't open this file: %s", argv[1]);
+        printf("Can't open this file: %s", argv[1]);
         exit(1);
     }
 
@@ -32,8 +31,8 @@ int main( int argc, char * argv[] ){
     }
 
     /* Scanner Part*/
-
-    while( getToken() != ENDFI );
+    TokenType temp;
+    while( (temp=getToken()) != ENDFI );
 
     /* Parser Part*/
 

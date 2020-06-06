@@ -4,7 +4,7 @@
 /*Test Token Type*/ /*accept*/
 typedef enum{
     /* Reserve Word*/
-    WHILE, IF, THEN, ELSE, DO,
+    WHILE, IF, THEN, ELSE, DO, END, IN, OUT,
     /* Special Symbol*/
     //PLUS, SUB, MULTIPLE, DIVIDE, BIGGER, LESSER, ASSIGN, EQUAL, SEMI,
     PLUS, MINUS, TIMES, DIVIDE, LP, RP, EQUAL, ASSIGN, LT, GT, SEMI,
@@ -19,7 +19,7 @@ typedef enum{
 }TokenType;
 
 /* test tokenTable */ /*accept*/
-const char * tokenTable[23]={"WHILE", "IF", "THEN", "ELSE", "DO",
+const char * tokenTable[26]={"WHILE", "IF", "THEN", "ELSE", "DO","END","IN","OUT",
                     "PLUS", "MINUS", "TIMES", "DIVID", "LP", "RP", "EQUAL", "ASIGN", "LT", "GT", "SEMI",
                     "INT10", "INT8", "INT16",
                     "FLO10", "FLO8", "FLO16",

@@ -1,4 +1,8 @@
-variable=15;
-while(variable<20){
+in variable;
+if(variable < 0 )then
+	out variable;
+end
+while(variable<20)do
 	variable=variable+1;
-}
+end
+out variable;
