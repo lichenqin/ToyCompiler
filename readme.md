@@ -44,7 +44,9 @@ Test中有:
 
 #### BNF语法:
 
-添加了三个新的关键字: `end` `in` `out`
+- 添加了三个新的关键字: `end` `in` `out`
+
+- 在exp状态下，既要保持左优先性，也要保持双目运算符号的优先级
 
 
 
@@ -60,11 +62,11 @@ if-stm --> `if` exp-stm `then` statement_sequence `end`
 
 while-stm -->	`while` exp-stmt `do` statement_sequence `end`
 
-in-stm -->	in `ID`
+in-stm -->	`in` `ID`
 
-out-stm --> out `ID`
+out-stm --> `out` `ID`
 
-​					| out `number`
+​					| `out` `number`
 
 p0 -->	p0 assign p0 | p1
 
@@ -91,3 +93,50 @@ p5 -->	`(` p0 `)` | `number` | `ID`
 
 
 > 尚未进行去除左递归工作，去除左递归后，进行LL(1)语义分析，构建first_follow集
+
+#### 消除左递归 提取左因子后的语法
+
+
+
+In-statement	--->	`In`	`ID`
+
+<kbd>提取左因子</kbd>
+
+Out-statement --->	`Out`	Out-statement'
+
+Out-statement'--->	`ID`	|	`number`	
+
+<kbd>左递归消除</kbd>
+
+exp	---->	exp_1	exp'
+
+exp'	--->	**assign**	exp_1	exp'	|	$\epsilon$
+
+**assign** -->	`=`
+
+exp_1	->	exp_2	exp_1'
+
+exp_1'   ->	**equal**	exp_2	exp_1'	|	$\epsilon$
+
+**equal**  -->	`==`
+
+exp_2 --->	exp_3	exp_2'
+
+exp_2'--->	**compare**	exp_3	exp_2'	|	$\epsilon$
+
+**compare**	--->	`>` | `<`
+
+exp_3 -->	exp_4	exp_3'
+
+exp_3'-->	**addop**	exp_4	exp_3'	|	$\epsilon$
+
+**addop**		--->	`+` | `-`
+
+exp_4	---->	exp_5	exp_4'
+
+exp_4'	--->	**mulop**	exp_5	exp_4'	|	$\epsilon$
+
+**mulop**	-->	`x` | `/`
+
+exp_5	---->	`(`	exp	`)`	|	`number`	|	`identifier`
+
