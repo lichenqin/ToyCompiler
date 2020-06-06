@@ -20,6 +20,8 @@ Test中有:
 - test 编译生成的可执行文件
 - leec.tiny 测试用文件
 
+
+
 #### 符号定义规则:
 
 **Identifier:** 字母开头, 可以包括数字、字母、下划线，最多31位
@@ -28,7 +30,9 @@ Test中有:
 
 **Special Number:** 包括 + - * / ( ) > < = == 其余均不包含
 
-**Reserve Word:** 包括IF THEN ELSE DO WHILE
+**Reserve Word:** 包括IF THEN ELSE DO WHILE IN OUT END
+
+
 
 #### 用法
 
@@ -41,6 +45,8 @@ Test中有:
 同时包含 <kbd>filename.tiny.out</kbd>的输出文件 输出内容与控制台显示内容相同。
 
 也可通过调用 `getToken()` 函数，单次获取一个Token的对应信息。
+
+
 
 #### BNF语法:
 
@@ -68,23 +74,23 @@ out-stm --> `out` `ID`
 
 ​					| `out` `number`
 
-p0 -->	p0 assign p0 | p1
+p0 -->	p0 assign p1 | p1
 
 assign -->	`=`
 
-p1 -->	p1 equal p1 | p2
+p1 -->	p1 equal p2 | p2
 
 equal -->	`==`
 
-p2 -->	p2 compare p2 | p3
+p2 -->	p2 compare p3 | p3
 
 compare -->	`>` | `<`
 
-p3 -->	p3 addop p3 | p4
+p3 -->	p3 addop p4 | p4
 
 addop -->	`+` | `-`
 
-p4 -->	p4 mulop p4 | p5
+p4 -->	p4 mulop p5 | p5
 
 mulop -->	`*` | `/`
 
@@ -96,7 +102,21 @@ p5 -->	`(` p0 `)` | `number` | `ID`
 
 #### 消除左递归 提取左因子后的语法
 
+<kbd>消除左递归</kbd>
 
+statement_sequence	--->	statement	statement_sequence'
+
+statement_sequence'	-->	`;`	statement	statement_sequence'	|	$\epsilon$
+
+statement	--->	if-statement	|	while-statement	|	In-statement	|	Out-statement	|	exp
+
+<kbd>提取左因子</kbd>
+
+if-statement	--->	 `if`	exp-stm	`then`	statement_sequence	else-part	`end`
+
+else-part   --->	`ese`	statement_sequence	|	$\epsilon$
+
+while-statement	--->	`while`	exp	`do`	statement_sequence	`end`
 
 In-statement	--->	`In`	`ID`
 
@@ -139,4 +159,8 @@ exp_4'	--->	**mulop**	exp_5	exp_4'	|	$\epsilon$
 **mulop**	-->	`x` | `/`
 
 exp_5	---->	`(`	exp	`)`	|	`number`	|	`identifier`
+
+
+
+#### 构建First Follow集
 
