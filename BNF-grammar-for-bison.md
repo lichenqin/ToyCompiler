@@ -1,26 +1,28 @@
 #### 用于Yacc分析的BNF语法
 
-s‘ -->	s
+s‘ -->	sq
 
-s  -->	s; statement
+sq -->	sq; statement
 
 ​			| statement
 
 statement --> if-stm 
 
-​					| while-stm 
+​					| while-stm
+
+​					|assign-stm
 
 ​					| in-stm 
 
 ​					| out-stm 
 
-​					| p0
+if-stm --> `if` exp `then` sq `end`
 
-if-stm --> `if` exp-stm `then` statement_sequence `end`
+​				| `if` exp `then` sq `else` sq `end`
 
-​				| `if` exp-stm `then` statement_sequence `else` statement_sequence `end`
+while-stm -->	`while` exp `do` sq `end`
 
-while-stm -->	`while` exp-stmt `do` statement_sequence `end`
+assign-stm---> `ID` `==` exp
 
 in-stm -->	`in` `ID`
 
@@ -28,24 +30,23 @@ out-stm --> `out` `ID`
 
 ​					| `out` `number`
 
-p0 -->	p0 assign p1 | p1
+exp -->	exp equal p2 
 
-assign -->	`=`
+​				| p2
 
-p1 -->	p1 equal p2 | p2
+​				| exp compare p2
 
 equal -->	`==`
 
-p2 -->	p2 compare p3 | p3
-
 compare -->	`>` | `<`
 
-p3 -->	p3 addop p4 | p4
+p2 -->	p2 addop p3 | p3
 
 addop -->	`+` | `-`
 
-p4 -->	p4 mulop p5 | p5
+p3 -->	p3 mulop p4 | p4
 
 mulop -->	`*` | `/`
 
-p5 -->	`(` p0 `)` | `number` | `ID`
+p4 -->	`(` exp `)` | `number` | `ID`
+
