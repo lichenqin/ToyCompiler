@@ -5,7 +5,21 @@
 # include <stdlib.h>
 # include <ctype.h>
 
+/* extern variable */
+extern FILE * read;
+extern FILE * output;
 
+#ifndef True
+#define True 1
+#endif
+
+#ifndef False
+#define False 0
+#endif
+
+extern int lineno; /* source line number for listing */
+
+/********Scanner Part Token Type Table********/
 //define Token Type
 typedef enum token{
     /* Reserve Word*/
@@ -27,16 +41,27 @@ typedef enum token{
     ENDFI
 }TokenType;
 
-/* extern variable */
-extern FILE * read;
-extern FILE * output;
+/********Parser Part TreeNode Structure********/
+typedef enum {StmtK,ExpK} NodeKind;
+typedef enum {IfK,RepeatK,AssignK,ReadK,WriteK} StmtKind;
+typedef enum {OpK,ConstK,IdK} ExpKind;
 
-#ifndef True
-#define True 1
-#endif
+/* ExpType is used for type checking */
+typedef enum {Void,Integer,Float} ExpType;
 
-#ifndef False
-#define False 0
-#endif
+#define MAXCHILDREN 3
+
+typedef struct treeNode{ 
+    struct treeNode * child[MAXCHILDREN];
+    struct treeNode * sibling;
+    NodeKind nodekind;
+    union { StmtKind stmt; ExpKind exp;} kind;
+    union { TokenType op;
+             int ival;
+             float fval;
+             char * name;
+    }attr;
+    ExpType type; /* for type checking of exps */
+}TreeNode;
 
 #endif
