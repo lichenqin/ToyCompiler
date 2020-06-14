@@ -43,8 +43,8 @@ typedef enum token{
 
 /********Parser Part TreeNode Structure********/
 typedef enum {StmtK,ExpK} NodeKind;
-typedef enum {IfK,RepeatK,AssignK,ReadK,WriteK} StmtKind;
-typedef enum {OpK,ConstK,IdK} ExpKind;
+typedef enum {IfK,WhileK,AssignK,InK,OutK} StmtKind;
+typedef enum {OpK,InterK,FloK,IdK} ExpKind;
 
 /* ExpType is used for type checking */
 typedef enum {Void,Integer,Float} ExpType;

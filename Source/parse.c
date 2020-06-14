@@ -105,17 +105,17 @@ void printTree( TreeNode * tree )
         case IfK:
           printf("If\n");
           break;
-        case RepeatK:
-           printf( "Repeat\n");
+        case WhileK:
+           printf( "While\n");
           break;
         case AssignK:
            printf( "Assign to: %s\n",tree->attr.name);
           break;
-        case ReadK:
-           printf( "Read: %s\n",tree->attr.name);
+        case InK:
+           printf( "In: %s\n",tree->attr.name);
           break;
-        case WriteK:
-           printf( "Write\n");
+        case OutK:
+           printf( "Out\n");
           break;
         default:
            printf( "Unknown ExpNode kind\n");
@@ -126,11 +126,14 @@ void printTree( TreeNode * tree )
     { switch (tree->kind.exp) {
         case OpK:
            printf( "Op: ");
-          printToken(tree->attr.op,"\0");
+          printToken(tree->attr.op);
           break;
-        case ConstK:
-           printf( "Const: %d\n",tree->attr.value); //需要修改
+        case InterK:
+           printf( "Integer: %d\n",tree->attr.ival);
           break;
+        case FloK:
+           printf( "Float: %lf\n",tree->attr.fval);
+        break;
         case IdK:
            printf( "Id: %s\n",tree->attr.name);
           break;
