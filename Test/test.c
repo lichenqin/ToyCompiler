@@ -1,5 +1,6 @@
 # include <stdio.h>
 # include <stdlib.h>
+# include "test_v.h"
 
 /*Test Token Type*/ /*accept*/
 typedef enum{
@@ -84,6 +85,9 @@ int Isid( char temp ){
 }
 
 int main( int argc, char * argv[]){
+
+    //printf("number_test_v: %d\n", number_test_v);
+    //cannot directly use other file's declaration variable.
 
     if( argc != 2){
         printf("Usage: %s <filename>\n", argv[0]);

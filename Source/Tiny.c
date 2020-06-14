@@ -1,7 +1,8 @@
 /*-------------------------------------------*/
 /* This is the main function of this compiler*/
-/* 1. Scanner--mian function getToken()      */
-/* 2. Parser                                 */
+/* 1. Scanner--main function getToken()      */
+/* 2. Parser --main function parser()        */
+/*           use Yacc to generate syntax Tree*/
 /* 3. Code Genertater                        */
 /*-------------------------------------------*/
 
@@ -30,12 +31,17 @@ int main( int argc, char * argv[] ){
         exit(1);
     }
 
+    /* Initialize Variables*/
+    char variable_string[Max_Va_Length];
+
     /* Scanner Part*/
     TokenType temp;
     while( (temp=getToken()) != ENDFI );
 
     /* Parser Part*/
-
+    //TreeNode * syntaxTree;
+    //syntaxTree = parser();
+    
     /* Code generater parter*/
 
     /*Close file handle*/

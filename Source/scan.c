@@ -7,12 +7,6 @@ char String_buffer[Max_Va_Length];
 /* 定义 identifier\number 缓冲区当前状态值*/
 int string_position = 0;
 
-/* 作为 line 缓冲区使用*/
-char Line_buffer[Max_Line];
-
-/* 定义 line 缓冲区当前的状态值*/
-int line_position = 0;
-
 /* 建立token类型表*/
 /* 添加了三个新关键字: end, in, out*/
 const char * tokenTable[27]={"WHILE", "IF", "THEN", "ELSE", "DO", "END", "IN", "OUT",
@@ -57,6 +51,14 @@ void printString(){
     for(int i = 0; i < string_position; ++i)
         printf("%c",String_buffer[i]);
     printf("\n");
+}
+
+/* 获取token对应的string */
+void copyString( char * array ){
+    for(int i = 0; i < string_position; ++i){
+        array[i] = String_buffer[i];
+    }
+    array[string_position] = '\0';
 }
 
 /* 安全模式下的strcat实现 避免指针溢出*/

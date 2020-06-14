@@ -44,12 +44,6 @@ FILE * output;
 #define Max_Va_Length 32
 #endif
 
-/* define max length of line buff. */
-/* Note: the real number of accept character are Max_Line-2 */
-#ifndef Max_Line
-#define Max_Line 256
-#endif
-
 /* getToken get token and return TokenType */
 TokenType getToken();
 
@@ -68,6 +62,9 @@ void printToken( State );
 
 /* print input string */
 void printString();
+
+/* copy variable string*/
+void copyString( char * );
 
 /* strcat implementation in security mode*/
 char * str_conjunction(char * pre_array, const char * appendex);
