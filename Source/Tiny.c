@@ -8,6 +8,7 @@
 
 # include "type.h"
 # include "scan.h"
+# include "parse.h"
 
 int main( int argc, char * argv[] ){
     
@@ -32,14 +33,14 @@ int main( int argc, char * argv[] ){
     }
 
     /* Initialize Variables*/
-    char variable_string[Max_Va_Length];
+    //char variable_string[Max_Va_Length];
 
     /* Scanner Part*/
     TokenType temp;
     while( (temp=getToken()) != ENDFI );
 
     /* Parser Part*/
-    //TreeNode * syntaxTree;
+    TreeNode * syntaxTree;
     //syntaxTree = parser();
     
     /* Code generater parter*/

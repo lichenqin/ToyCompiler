@@ -2,6 +2,25 @@
 
 /*This language Design doesn't consider minus situation*/
 
+/*convert random radix interger to decimal interger*/
+int convertI(const char * array, int radix, int start){
+    int sum = 0;
+    int number[32] = {0};
+
+    for( int i = start; array[i] != '\0'; ++i){
+        if( array[i] >= 'A'){
+            number[i] = array[i] - 55;  //convert 16 to 10
+            continue;
+        }
+        number[i] = array[i] - 48;
+    }
+
+    for( int i = start; array[i] != '\0'; ++i)
+        sum = sum*radix + number[i];
+    
+    return sum;
+}
+
 /*convert random radix float to decimal float*/
 float convertF(const char * array, int radix, int start){
     float sum = 0.0;
@@ -48,7 +67,7 @@ TreeNode * newStmtNode(StmtKind kind)
 { TreeNode * t = (TreeNode *) malloc(sizeof(TreeNode));
   int i;
   if (t==NULL)
-    fprintf(output,"Out of memory error\n");    //是否输出到文件中 存疑
+    printf("Out of memory error\n");    //输出ERROR
   else {
     for (i=0;i<MAXCHILDREN;i++) t->child[i] = NULL;
     t->sibling = NULL;
@@ -65,7 +84,7 @@ TreeNode * newExpNode(ExpKind kind)
 { TreeNode * t = (TreeNode *) malloc(sizeof(TreeNode));
   int i;
   if (t==NULL)
-    fprintf(output,"Out of memory error\n");    //是否输出到文件中 存疑
+    printf("Out of memory error\n");    //输出ERROR
   else {
     for (i=0;i<MAXCHILDREN;i++) t->child[i] = NULL;
     t->sibling = NULL;
@@ -79,7 +98,7 @@ TreeNode * newExpNode(ExpKind kind)
 /* Variable indentno is used by printTree to
  * store current number of spaces to indent
  */
-static indentno = 0;
+static int indentno = 0;
 
 /* macros to increase/decrease indentation */
 #define INDENT indentno+=2

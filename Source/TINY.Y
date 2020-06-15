@@ -1,23 +1,23 @@
 /****************************************************/
 /* File: tiny.y                                     */
-/* The TINY Yacc/Bison specification file           */
+/* The TINY Yacc specification file                 */
 /* Compiler Construction: Principles and Practice   */
 /* Kenneth C. Louden                                */
 /****************************************************/
 %{
 #define YYPARSER /* distinguishes Yacc output from other code files */
 
-#include "type.h"
+#include "type.h" /* import head file*/
 #include "scan.h"
 #include "parse.h"
 
-#define YYSTYPE TreeNode *
+#define YYSTYPE TreeNode *  /*  define YYSTYPE as (TreeNode *) */
 static char * savedName; /* for use in assignments */
-static int savedLineNo;  /* ditto */
 static TreeNode * savedTree; /* stores syntax tree for later return */
 
 %}
 
+%token ENDFI 0
 %token WHILE IF THEN ELSE DO END IN OUT
 %token PLUS MINUS TIMES DIVIDE LP RP EQUAL ASSIGN LT GT SEMI
 %token INT10 INT8 INT16 FLO10 FLO8 FLO16
@@ -42,7 +42,7 @@ stmt_seq    : stmt_seq SEMI stmt
             ;
 stmt        : if_stmt { $$ = $1; }
             | while_stmt { $$ = $1; }
-	    | assign_stmt { $$ = $1; }
+	          | assign_stmt { $$ = $1; }
             | in_stmt { $$ = $1; }
             | out_stmt { $$ = $1; }
             | error  { $$ = NULL; }
@@ -169,8 +169,8 @@ exp3        : LP exp RP
 %%
 
 int yyerror(char * message)
-{ fprintf(listing,"Syntax error at line %d: %s\n",lineno,message);
-  fprintf(listing,"Current token: ");
+{ printf("Syntax error %s\n",message);
+  printf("Current token: ");
   printToken(yychar,tokenString);
   Error = TRUE;
   return 0;
