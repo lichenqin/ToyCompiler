@@ -44,6 +44,9 @@ FILE * output;
 #define Max_Va_Length 32
 #endif
 
+extern char String_buffer[Max_Va_Length];
+extern int string_position;
+
 /* getToken get token and return TokenType */
 TokenType getToken();
 
@@ -58,13 +61,14 @@ int Isinter( char temp);
 int Isid( char temp );
 
 /* print token type */
-void printToken( State );
+//void printToken( State );
+void printToken( int );
 
 /* print input string */
 void printString();
 
 /* copy variable string*/
-void copyString( char * );
+char * copyString( );
 
 /* strcat implementation in security mode*/
 char * str_conjunction(char * pre_array, const char * appendex);

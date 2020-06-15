@@ -54,7 +54,7 @@ char * str_conjunction(char * pre_array, const char * appendex){
 }
 
 
-void printToken( TokenType object ){
+void printToken( int object ){
     printf("%s\n",tokenTable[object]);
 }
 
@@ -88,6 +88,10 @@ int main( int argc, char * argv[]){
 
     //printf("number_test_v: %d\n", number_test_v);
     //cannot directly use other file's declaration variable.
+
+    TokenType token = PLUS;
+    printToken(token);
+    exit(1);
 
     if( argc != 2){
         printf("Usage: %s <filename>\n", argv[0]);

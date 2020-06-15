@@ -39,7 +39,7 @@ int main( int argc, char * argv[] ){
     while( (temp=getToken()) != ENDFI );
 
     /* Parser Part*/
-    TreeNode * syntaxTree;
+    //TreeNode * syntaxTree;
     //syntaxTree = parser();
     
     /* Code generater parter*/

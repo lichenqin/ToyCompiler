@@ -42,7 +42,10 @@ int Isid( char temp ){
 }
 
 /* 打印字符类型 */
-void printToken(State current_state){
+// void printToken(State current_state){
+//     printf("%s:\t",tokenTable[current_state]);
+// }
+void printToken(int current_state){
     printf("%s:\t",tokenTable[current_state]);
 }
 
@@ -54,11 +57,18 @@ void printString(){
 }
 
 /* 获取token对应的string */
-void copyString( char * array ){
-    for(int i = 0; i < string_position; ++i){
-        array[i] = String_buffer[i];
+char * copyString(  ){
+    char * array = malloc(string_position);
+    if( array == NULL )
+        printf("Out of memory Error");
+    else
+    {
+        int i = 0;
+        for(; i<string_position; ++i )
+            array[i] = String_buffer[i];
+        array[i] = '\0';
     }
-    array[string_position] = '\0';
+    return array;
 }
 
 /* 安全模式下的strcat实现 避免指针溢出*/
@@ -280,6 +290,7 @@ TokenType getToken(){
                 else if( Isinter(convert)){
                     current_state = Do;
                     accept = True;
+                    save = False;
                 }
                 else    current_state = Error;
                 break;
