@@ -9,7 +9,7 @@ int string_position = 0;
 
 /* 建立token类型表*/
 /* 添加了三个新关键字: end, in, out*/
-const char * tokenTable[27]={"WHILE", "IF", "THEN", "ELSE", "DO", "END", "IN", "OUT",
+const char * tokenTable[28]={"", "WHILE", "IF", "THEN", "ELSE", "DO", "END", "IN", "OUT",
                     "PLUS", "MINUS", "TIMES", "DIVID", "LP", "RP", "EQUAL", "ASIGN", "LT", "GT", "SEMI",
                     "INT10", "INT8", "INT16",
                     "FLO10", "FLO8", "FLO16",

@@ -22,6 +22,8 @@ extern int lineno; /* source line number for listing */
 /********Scanner Part Token Type Table********/
 //define Token Type
 typedef enum token{
+    /* End File*/
+    ENDFI,
     /* Reserve Word*/
     WHILE, IF, THEN, ELSE, DO, END, IN, OUT,    /*add three new reserve word: end, in, out*/
     /* Special Symbol*/
@@ -36,9 +38,7 @@ typedef enum token{
     /* Error*/
     ERROR,
     /* Interval*/
-    INTER,
-    /* End File*/
-    ENDFI
+    INTER
 }TokenType;
 
 /********Parser Part TreeNode Structure********/

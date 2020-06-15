@@ -5,7 +5,7 @@
 
 /* define DFA state*/
 typedef enum dfa_state{
-    While, If, Then, Else, Do, End, In, Out, Plus, Minus, Times, Divide, Lp, Rp, Equal, Assign, Lt, Gt, Semi,
+    Eof, While, If, Then, Else, Do, End, In, Out, Plus, Minus, Times, Divide, Lp, Rp, Equal, Assign, Lt, Gt, Semi,
     Int10, Int8, Int16, f10, f8, f16, Id, Error,
     /* WHILE's middle state*/
     mw, mwh, mwhi, mwhil,
@@ -33,7 +33,6 @@ typedef enum dfa_state{
     start,
     /* Error state*/
     /*END Of File*/
-    Eof
 }State;
 
 FILE * read;

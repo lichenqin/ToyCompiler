@@ -9,6 +9,7 @@
 # include "type.h"
 # include "scan.h"
 # include "parse.h"
+# include "y.tab.h"
 
 int main( int argc, char * argv[] ){
     
@@ -41,8 +42,9 @@ int main( int argc, char * argv[] ){
 
     /* Parser Part*/
     TreeNode * syntaxTree;
-    //syntaxTree = parser();
-    
+    syntaxTree = parse();
+    printf("\n************Syntax Tree************\n");
+    printTree(syntaxTree);
     /* Code generater parter*/
 
     /*Close file handle*/
