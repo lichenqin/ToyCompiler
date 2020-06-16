@@ -1,8 +1,8 @@
 /*-------------------------------------------*/
 /* This is the main function of this compiler*/
 /* 1. Scanner--main function getToken()      */
-/* 2. Parser --main function parse()         */
-/*    use Recursive Descent                  */
+/* 2. Parser --main function parser()        */
+/*           use Yacc to generate syntax Tree*/
 /* 3. Code Genertater                        */
 /*-------------------------------------------*/
 

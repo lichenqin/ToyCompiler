@@ -1,8 +1,0 @@
-in variable;
-if(variable < 0 )then
-	out variable;
-end
-out variable;
-float_number = 12.345;
-hex_number = 0xFF;
-int8_number = 023;

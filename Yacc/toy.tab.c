@@ -74,7 +74,7 @@
 static char * savedName;
 static TreeNode * savedTree;
 
-#line 78 "y.tab.c" /* yacc.c:339  */
+#line 78 "toy.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -92,10 +92,7 @@ static TreeNode * savedTree;
 # define YYERROR_VERBOSE 0
 #endif
 
-/* In a future release of Bison, this section will be replaced
-   by #include "y.tab.h".  */
-#ifndef YY_YY_Y_TAB_H_INCLUDED
-# define YY_YY_Y_TAB_H_INCLUDED
+
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -138,34 +135,6 @@ extern int yydebug;
     YERROR = 27
   };
 #endif
-/* Tokens.  */
-#define YWHILE 1
-#define YIF 2
-#define YTHEN 3
-#define YELSE 4
-#define YDO 5
-#define YEND 6
-#define YIN 7
-#define YOUT 8
-#define YPLUS 9
-#define YMINUS 10
-#define YTIMES 11
-#define YDIVIDE 12
-#define YLP 13
-#define YRP 14
-#define YEQUAL 15
-#define YASSIGN 16
-#define YLT 17
-#define YGT 18
-#define YSEMI 19
-#define YINT10 20
-#define YINT8 21
-#define YINT16 22
-#define YFLO10 23
-#define YFLO8 24
-#define YFLO16 25
-#define YID 26
-#define YERROR 27
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -179,11 +148,11 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_Y_TAB_H_INCLUDED  */
+
 
 /* Copy the second part of user declarations.  */
 
-#line 187 "y.tab.c" /* yacc.c:358  */
+#line 156 "toy.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -480,10 +449,10 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    25,    25,    28,    39,    42,    44,    46,    48,    50,
-      52,    55,    60,    67,    74,    73,    81,    86,    91,    97,
-     103,   109,   112,   118,   124,   127,   133,   139,   142,   144,
-     150,   156,   162,   168,   174,   180,   184
+       0,    25,    25,    30,    41,    46,    50,    54,    58,    62,
+      66,    69,    74,    81,    88,    87,    95,   103,   108,   114,
+     120,   126,   129,   135,   141,   144,   150,   156,   159,   161,
+     171,   181,   191,   201,   211,   221,   227
 };
 #endif
 
@@ -1294,12 +1263,14 @@ yyreduce:
     {
         case 2:
 #line 26 "toy.y" /* yacc.c:1646  */
-    {savedTree = (yyvsp[0]);}
-#line 1299 "y.tab.c" /* yacc.c:1646  */
+    {savedTree = (yyvsp[0]);
+		 printf("Syntax Tree Construct Successful!\n");
+		}
+#line 1270 "toy.tab.c" /* yacc.c:1646  */
     break;
 
   case 3:
-#line 29 "toy.y" /* yacc.c:1646  */
+#line 31 "toy.y" /* yacc.c:1646  */
     {YYSTYPE t = (yyvsp[-2]);
 		if(t != NULL){
 			while(t->sibling != NULL)
@@ -1310,280 +1281,321 @@ yyreduce:
 		else
 			(yyval) = (yyvsp[0]);
 		}
-#line 1314 "y.tab.c" /* yacc.c:1646  */
+#line 1285 "toy.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 40 "toy.y" /* yacc.c:1646  */
-    {(yyval) = (yyvsp[0]);}
-#line 1320 "y.tab.c" /* yacc.c:1646  */
+#line 42 "toy.y" /* yacc.c:1646  */
+    {(yyval) = (yyvsp[0]);
+		 printf("State: stmt\n");
+		}
+#line 1293 "toy.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 43 "toy.y" /* yacc.c:1646  */
-    {(yyval) = (yyvsp[0]);}
-#line 1326 "y.tab.c" /* yacc.c:1646  */
+#line 47 "toy.y" /* yacc.c:1646  */
+    {(yyval) = (yyvsp[0]);
+		 printf("State: if_stmt\n")
+		}
+#line 1301 "toy.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 45 "toy.y" /* yacc.c:1646  */
-    {(yyval) = (yyvsp[0]);}
-#line 1332 "y.tab.c" /* yacc.c:1646  */
+#line 51 "toy.y" /* yacc.c:1646  */
+    {(yyval) = (yyvsp[0]);
+		 printf("State: whi_stmt\n");
+		}
+#line 1309 "toy.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 47 "toy.y" /* yacc.c:1646  */
-    {(yyval) = (yyvsp[0]);}
-#line 1338 "y.tab.c" /* yacc.c:1646  */
+#line 55 "toy.y" /* yacc.c:1646  */
+    {(yyval) = (yyvsp[0]);
+		 printf("State: ass_stmt\n");
+		}
+#line 1317 "toy.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 49 "toy.y" /* yacc.c:1646  */
-    {(yyval) = (yyvsp[0]);}
-#line 1344 "y.tab.c" /* yacc.c:1646  */
+#line 59 "toy.y" /* yacc.c:1646  */
+    {(yyval) = (yyvsp[0]);
+		 printf("State: in_stmt\n")
+		}
+#line 1325 "toy.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 51 "toy.y" /* yacc.c:1646  */
-    {(yyval) = (yyvsp[0]);}
-#line 1350 "y.tab.c" /* yacc.c:1646  */
+#line 63 "toy.y" /* yacc.c:1646  */
+    {(yyval) = (yyvsp[0]);
+		 printf("State: out_stmt\n");
+		}
+#line 1333 "toy.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 53 "toy.y" /* yacc.c:1646  */
+#line 67 "toy.y" /* yacc.c:1646  */
     {(yyval) = NULL;}
-#line 1356 "y.tab.c" /* yacc.c:1646  */
+#line 1339 "toy.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 56 "toy.y" /* yacc.c:1646  */
+#line 70 "toy.y" /* yacc.c:1646  */
     {(yyval) = newStmtNode(IfK);
 		 (yyval)->child[0] = (yyvsp[-3]);
 		 (yyval)->child[1] = (yyvsp[-1]);
 		}
-#line 1365 "y.tab.c" /* yacc.c:1646  */
+#line 1348 "toy.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 61 "toy.y" /* yacc.c:1646  */
+#line 75 "toy.y" /* yacc.c:1646  */
     {(yyval) = newStmtNode(IfK);
 		 (yyval)->child[0] = (yyvsp[-5]);
 		 (yyval)->child[1] = (yyvsp[-3]);
 		 (yyval)->child[2] = (yyvsp[-1]);
 		}
-#line 1375 "y.tab.c" /* yacc.c:1646  */
+#line 1358 "toy.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 68 "toy.y" /* yacc.c:1646  */
+#line 82 "toy.y" /* yacc.c:1646  */
     {(yyval) = newStmtNode(WhileK);
 		 (yyval)->child[0] = (yyvsp[-3]);
 		 (yyval)->child[1] = (yyvsp[-1]);
 		}
-#line 1384 "y.tab.c" /* yacc.c:1646  */
+#line 1367 "toy.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 74 "toy.y" /* yacc.c:1646  */
+#line 88 "toy.y" /* yacc.c:1646  */
     {savedName = copyString();}
-#line 1390 "y.tab.c" /* yacc.c:1646  */
+#line 1373 "toy.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 76 "toy.y" /* yacc.c:1646  */
+#line 90 "toy.y" /* yacc.c:1646  */
     {(yyval) = newStmtNode(AssignK);
 		 (yyval)->attr.name = savedName;
 		 (yyval)->child[0] = (yyvsp[-1]);
 		}
-#line 1399 "y.tab.c" /* yacc.c:1646  */
+#line 1382 "toy.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 82 "toy.y" /* yacc.c:1646  */
+#line 96 "toy.y" /* yacc.c:1646  */
     {(yyval) = newStmtNode(InK);
 		 (yyval)->attr.name = copyString();
+		 printf("State: IN\n");
+		 printf("token:");
+		 printToken(yychar);
 		}
-#line 1407 "y.tab.c" /* yacc.c:1646  */
+#line 1393 "toy.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 87 "toy.y" /* yacc.c:1646  */
+#line 104 "toy.y" /* yacc.c:1646  */
     {(yyval) = newStmtNode(OutK);
 		 (yyval)->child[0] = (yyvsp[0]);
 		}
-#line 1415 "y.tab.c" /* yacc.c:1646  */
+#line 1401 "toy.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 92 "toy.y" /* yacc.c:1646  */
+#line 109 "toy.y" /* yacc.c:1646  */
     { (yyval) = newExpNode(OpK);
 		  (yyval)->child[0] = (yyvsp[-2]);
 		  (yyval)->child[1] = (yyvsp[0]);
 		  (yyval)->attr.op = EQUAL;
 		}
-#line 1425 "y.tab.c" /* yacc.c:1646  */
+#line 1411 "toy.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 98 "toy.y" /* yacc.c:1646  */
+#line 115 "toy.y" /* yacc.c:1646  */
     { (yyval) = newExpNode(OpK);
 		  (yyval)->child[0] = (yyvsp[-2]);
 		  (yyval)->child[1] = (yyvsp[0]);
 		  (yyval)->attr.op = LT;
 		}
-#line 1435 "y.tab.c" /* yacc.c:1646  */
+#line 1421 "toy.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 104 "toy.y" /* yacc.c:1646  */
+#line 121 "toy.y" /* yacc.c:1646  */
     { (yyval) = newExpNode(OpK);
 		  (yyval)->child[0] = (yyvsp[-2]);
 		  (yyval)->child[1] = (yyvsp[0]);
 		  (yyval)->attr.op = GT;
 		}
-#line 1445 "y.tab.c" /* yacc.c:1646  */
+#line 1431 "toy.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 110 "toy.y" /* yacc.c:1646  */
+#line 127 "toy.y" /* yacc.c:1646  */
     {(yyval) = (yyvsp[0]);}
-#line 1451 "y.tab.c" /* yacc.c:1646  */
+#line 1437 "toy.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 113 "toy.y" /* yacc.c:1646  */
+#line 130 "toy.y" /* yacc.c:1646  */
     { (yyval) = newExpNode(OpK);
 		  (yyval)->child[0] = (yyvsp[-2]);
 		  (yyval)->child[1] = (yyvsp[0]);
 		  (yyval)->attr.op = PLUS;
 		}
-#line 1461 "y.tab.c" /* yacc.c:1646  */
+#line 1447 "toy.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 119 "toy.y" /* yacc.c:1646  */
+#line 136 "toy.y" /* yacc.c:1646  */
     { (yyval) = newExpNode(OpK);
 		  (yyval)->child[0] = (yyvsp[-2]);
 		  (yyval)->child[1] = (yyvsp[0]);
 		  (yyval)->attr.op = MINUS;
 		}
-#line 1471 "y.tab.c" /* yacc.c:1646  */
+#line 1457 "toy.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 125 "toy.y" /* yacc.c:1646  */
+#line 142 "toy.y" /* yacc.c:1646  */
     {(yyval) = (yyvsp[0]);}
-#line 1477 "y.tab.c" /* yacc.c:1646  */
+#line 1463 "toy.tab.c" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 128 "toy.y" /* yacc.c:1646  */
+#line 145 "toy.y" /* yacc.c:1646  */
     { (yyval) = newExpNode(OpK);
 		  (yyval)->child[0] = (yyvsp[-2]);
 		  (yyval)->child[1] = (yyvsp[0]);
 		  (yyval)->attr.op = TIMES;
 		}
-#line 1487 "y.tab.c" /* yacc.c:1646  */
+#line 1473 "toy.tab.c" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 134 "toy.y" /* yacc.c:1646  */
+#line 151 "toy.y" /* yacc.c:1646  */
     { (yyval) = newExpNode(OpK);
 		  (yyval)->child[0] = (yyvsp[-2]);
 		  (yyval)->child[1] = (yyvsp[0]);
 		  (yyval)->attr.op = DIVIDE;
 		}
-#line 1497 "y.tab.c" /* yacc.c:1646  */
+#line 1483 "toy.tab.c" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 140 "toy.y" /* yacc.c:1646  */
+#line 157 "toy.y" /* yacc.c:1646  */
     {(yyval) = (yyvsp[0]);}
-#line 1503 "y.tab.c" /* yacc.c:1646  */
+#line 1489 "toy.tab.c" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 143 "toy.y" /* yacc.c:1646  */
+#line 160 "toy.y" /* yacc.c:1646  */
     {(yyval) = (yyvsp[-1]);}
-#line 1509 "y.tab.c" /* yacc.c:1646  */
+#line 1495 "toy.tab.c" /* yacc.c:1646  */
     break;
 
   case 29:
-#line 145 "toy.y" /* yacc.c:1646  */
+#line 162 "toy.y" /* yacc.c:1646  */
     { (yyval) = newExpNode(InterK);
 		  savedName = copyString();
 		  (yyval)->attr.ival = convertI(savedName, 10, 0);
+		  printf("State:");
+		  printToken(yychar);
+		  printf("Name:");
+		  printf("%s\n",savedName);
 		  free(savedName);
 		}
-#line 1519 "y.tab.c" /* yacc.c:1646  */
+#line 1509 "toy.tab.c" /* yacc.c:1646  */
     break;
 
   case 30:
-#line 151 "toy.y" /* yacc.c:1646  */
+#line 172 "toy.y" /* yacc.c:1646  */
     { (yyval) = newExpNode(InterK);
 		  savedName = copyString();
 		  (yyval)->attr.ival = convertI(savedName, 8, 1);
+		  printf("State:");
+		  printToken(yychar);
+		  printf("Name:");
+		  printf("%s\n",savedName);
 		  free(savedName);
 		}
-#line 1529 "y.tab.c" /* yacc.c:1646  */
+#line 1523 "toy.tab.c" /* yacc.c:1646  */
     break;
 
   case 31:
-#line 157 "toy.y" /* yacc.c:1646  */
+#line 182 "toy.y" /* yacc.c:1646  */
     { (yyval) = newExpNode(InterK);
 		  savedName = copyString();
 		  (yyval)->attr.ival = convertI(savedName, 16, 2);
+		  printf("State:");
+		  printToken(yychar);
+		  printf("Name:");
+		  printf("%s\n",savedName);
 		  free(savedName);
 		}
-#line 1539 "y.tab.c" /* yacc.c:1646  */
+#line 1537 "toy.tab.c" /* yacc.c:1646  */
     break;
 
   case 32:
-#line 163 "toy.y" /* yacc.c:1646  */
+#line 192 "toy.y" /* yacc.c:1646  */
     { (yyval) = newExpNode(FloK);
 		  savedName = copyString();
 		  (yyval)->attr.fval = convertF(savedName, 10, 0);
+		  printf("State:");
+		  printToken(yychar);
+		  printf("Name:");
+		  printf("%s\n",savedName);
 		  free(savedName);
 		}
-#line 1549 "y.tab.c" /* yacc.c:1646  */
+#line 1551 "toy.tab.c" /* yacc.c:1646  */
     break;
 
   case 33:
-#line 169 "toy.y" /* yacc.c:1646  */
+#line 202 "toy.y" /* yacc.c:1646  */
     { (yyval) = newExpNode(FloK);
 		  savedName = copyString();
 		  (yyval)->attr.fval = convertF(savedName, 8, 1);
+                  printf("State:");
+		  printToken(yychar);
+		  printf("Name:");
+		  printf("%s\n",savedName);
 		  free(savedName);
 		}
-#line 1559 "y.tab.c" /* yacc.c:1646  */
+#line 1565 "toy.tab.c" /* yacc.c:1646  */
     break;
 
   case 34:
-#line 175 "toy.y" /* yacc.c:1646  */
+#line 212 "toy.y" /* yacc.c:1646  */
     { (yyval) = newExpNode(FloK);
 		  savedName = copyString();
 		  (yyval)->attr.fval = convertF(savedName, 16, 2);
+                  printf("State:");
+		  printToken(yychar);
+		  printf("Name:");
+		  printf("%s\n",savedName);
 		  free(savedName);
 		}
-#line 1569 "y.tab.c" /* yacc.c:1646  */
+#line 1579 "toy.tab.c" /* yacc.c:1646  */
     break;
 
   case 35:
-#line 181 "toy.y" /* yacc.c:1646  */
+#line 222 "toy.y" /* yacc.c:1646  */
     { (yyval) = newExpNode(IdK);
 		  (yyval)->attr.name = copyString();
+                  printf("State:");
+		  printToken(yychar);
 		}
-#line 1577 "y.tab.c" /* yacc.c:1646  */
+#line 1589 "toy.tab.c" /* yacc.c:1646  */
     break;
 
   case 36:
-#line 185 "toy.y" /* yacc.c:1646  */
+#line 228 "toy.y" /* yacc.c:1646  */
     {(yyval) = NULL;}
-#line 1583 "y.tab.c" /* yacc.c:1646  */
+#line 1595 "toy.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1587 "y.tab.c" /* yacc.c:1646  */
+#line 1599 "toy.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1811,7 +1823,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 188 "toy.y" /* yacc.c:1906  */
+#line 231 "toy.y" /* yacc.c:1906  */
 
 
 int yyerror( char * message ){

@@ -12,6 +12,9 @@ int convertI(const char *, int radix, int start);
 /*convert float*/
 float convertF(const char *, int radix, int start);
 
+/*Main function of parsing*/
+TreeNode * parse();
+
 /*新建节点*/
 
 /* Function newStmtNode creates a new statement

@@ -14,163 +14,219 @@ static char * savedName;
 static TreeNode * savedTree;
 %}
 
-%token ENDFI 0	/*End file symbol*/
-%token WHILE 1 IF 2 THEN 3 ELSE 4 DO 5 END 6 IN 7 OUT 8	/*Reserved word symbol*/
-%token PLUS 9 MINUS 10 TIMES 11 DIVIDE 12 LP 13 RP 14 
-%token EQUAL 15 ASSIGN 16 LT 17 GT 18 SEMI 19
-%token INT10 20 INT8 21 INT16 22 FLO10 23 FLO8 24 FLO16 25
-%token ID 26
-%token ERROR 27
+%token YWHILE 1 YIF 2 YTHEN 3 YELSE 4 YDO 5 YEND 6 YIN 7 YOUT 8	/*Reserved word symbol*/
+%token YPLUS 9 YMINUS 10 YTIMES 11 YDIVIDE 12 YLP 13 YRP 14 
+%token YEQUAL 15 YASSIGN 16 YLT 17 YGT 18 YSEMI 19
+%token YINT10 20 YINT8 21 YINT16 22 YFLO10 23 YFLO8 24 YFLO16 25
+%token YID 26
+%token YERROR 27
 
 %%
-
 program	: stmt_seq
-		{ savedTree = $1; }
+		{savedTree = $1;
+		 printf("Syntax Tree Construct Successful!\n");
+		}
 	;
-stmt_seq: stmt_seq SEMI stmt
-		{ YYSTYPE t = $1;
-			if(t != NULL)
-			{	while(t->sibling != NULL )
-					t = t->sibling;
-				t->sibling = $3;
-				$$ = $1;
-			}
-			else	$$ = $3;}
+stmt_seq: stmt_seq YSEMI stmt
+		{YYSTYPE t = $1;
+		if(t != NULL){
+			while(t->sibling != NULL)
+				t = t->sibling;
+			t->sibling = $3;
+			$$ = $1;
+		}
+		else
+			$$ = $3;
+		}
 	| stmt
-		{ $$ = $1; }
-	;
-stmt	: if_stmt { $$ = $1; }
-     	| whi_stmt { $$ = $1; }
-	| ass_stmt { $$ = $1; }
-	| in_stmt { $$ = $1; }
-	| out_stmt { $$ = $1; }
-	| error { $$ = NULL; }
-	;
-if_stmt	: IF exp THEN stmt_seq END
-		{ $$ = newStmtNode(IfK);
-		  $$->child[0] = $2;
-		  $$->child[1] = $4;
-		}
-	| IF exp THEN stmt_seq ELSE stmt_seq END
-		{ $$ = newStmtNode(IfK);
-		  $$->child[0] = $2;
-		  $$->child[1] = $4;
-		  $$->child[2] = $6;
+		{$$ = $1;
+		 printf("State: stmt\n");
 		}
 	;
-whi_stmt: WHILE exp DO stmt_seq
-		{ $$ = newStmtNode(WhileK);
-		  $$->child[0] = $2;
-		  $$->child[1] = $4;
+stmt	: if_stmt
+		{$$ = $1;
+		 printf("State: if_stmt\n")
+		}
+     	| whi_stmt
+		{$$ = $1;
+		 printf("State: whi_stmt\n");
+		}
+	| ass_stmt
+		{$$ = $1;
+		 printf("State: ass_stmt\n");
+		}
+	| in_stmt
+		{$$ = $1;
+		 printf("State: in_stmt\n")
+		}
+	| out_stmt
+		{$$ = $1;
+		 printf("State: out_stmt\n");
+		}
+	| YERROR
+		{$$ = NULL;}
+	;
+if_stmt	: YIF exp YTHEN stmt_seq YEND
+		{$$ = newStmtNode(IfK);
+		 $$->child[0] = $2;
+		 $$->child[1] = $4;
+		}
+	| YIF exp YTHEN stmt_seq YELSE stmt_seq YEND
+		{$$ = newStmtNode(IfK);
+		 $$->child[0] = $2;
+		 $$->child[1] = $4;
+		 $$->child[2] = $6;
 		}
 	;
-ass_stmt: ID 	{ savedName = copyString();}
-	  ASSIGN exp
-		{ $$ = newStmtNode(AssignK);
-		  $$->child[0] = $3;
-		  $$->attr.name = saveName;
+whi_stmt: YWHILE exp YDO stmt_seq YEND
+		{$$ = newStmtNode(WhileK);
+		 $$->child[0] = $2;
+		 $$->child[1] = $4;
 		}
 	;
-in_stmt	: IN ID
-		{ $$ = newStmtNode(Ink);
-		  $$->attr.name = copyString();
+ass_stmt: YID
+		{savedName = copyString();}
+	  YASSIGN exp
+		{$$ = newStmtNode(AssignK);
+		 $$->attr.name = savedName;
+		 $$->child[0] = $3;
 		}
 	;
-out_stmt: OUT exp
-		{ $$ = newStmtNode(OutK);
-		  $$->child[0] = $2;
+in_stmt	: YIN YID
+		{$$ = newStmtNode(InK);
+		 $$->attr.name = copyString();
+		 printf("State: IN\n");
+		 printf("token:");
+		 printToken(yychar);
 		}
 	;
-exp	: exp LT exp1
-    		{ $$ = newExpNode(OpK);
-		  $$->child[0] = $1;
-		  $$->child[1] = $3;
-		  $$->addr.op = LT;
+out_stmt: YOUT exp
+		{$$ = newStmtNode(OutK);
+		 $$->child[0] = $2;
 		}
-    	| exp GT exp1
-		{ $$ = newExpNode(OpK);
-		  $$->child[0] = $1;
-		  $$->child[1] = $3;
-		  $$->attr.op = GT;
-		}
-    	| exp EQUAL exp1
+	;
+exp	: exp YEQUAL exp1
 		{ $$ = newExpNode(OpK);
 		  $$->child[0] = $1;
 		  $$->child[1] = $3;
 		  $$->attr.op = EQUAL;
 		}
-	;
-exp1	: exp1 PLUS exp2
-     		{ $$ = newExpNode(OpK);
+   	| exp YLT exp1
+		{ $$ = newExpNode(OpK);
+		  $$->child[0] = $1;
+		  $$->child[1] = $3;
+		  $$->attr.op = LT;
+		}
+   	| exp YGT exp1
+		{ $$ = newExpNode(OpK);
+		  $$->child[0] = $1;
+		  $$->child[1] = $3;
+		  $$->attr.op = GT;
+		}
+   	| exp1
+		{$$ = $1;}
+   	;
+exp1	: exp1 YPLUS exp2
+		{ $$ = newExpNode(OpK);
 		  $$->child[0] = $1;
 		  $$->child[1] = $3;
 		  $$->attr.op = PLUS;
 		}
-     	| exp1 MINUS exp2
+    	| exp1 YMINUS exp2
 		{ $$ = newExpNode(OpK);
 		  $$->child[0] = $1;
 		  $$->child[1] = $3;
 		  $$->attr.op = MINUS;
 		}
-	;
-exp2	: exp2 TIMES exp3
-     		{ $$ = newExpNode(OpK);
+    	| exp2
+		{$$ = $1;}
+    	;
+exp2	: exp2 YTIMES exp3
+		{ $$ = newExpNode(OpK);
 		  $$->child[0] = $1;
 		  $$->child[1] = $3;
 		  $$->attr.op = TIMES;
 		}
-     	| exp2 DIVIDE exp3
+    	| exp2 YDIVIDE exp3
 		{ $$ = newExpNode(OpK);
 		  $$->child[0] = $1;
 		  $$->child[1] = $3;
 		  $$->attr.op = DIVIDE;
 		}
-	;
-exp3	: LP exp RP
-     		{ $$ = $2; }
-     	| INT10
+    	| exp3
+		{$$ = $1;}
+    	;
+exp3	: YLP exp YRP
+		{$$ = $2;}
+    	| YINT10
 		{ $$ = newExpNode(InterK);
 		  savedName = copyString();
 		  $$->attr.ival = convertI(savedName, 10, 0);
+		  printf("State:");
+		  printToken(yychar);
+		  printf("Name:");
+		  printf("%s\n",savedName);
 		  free(savedName);
 		}
-	| INT8
+    	| YINT8
 		{ $$ = newExpNode(InterK);
 		  savedName = copyString();
 		  $$->attr.ival = convertI(savedName, 8, 1);
+		  printf("State:");
+		  printToken(yychar);
+		  printf("Name:");
+		  printf("%s\n",savedName);
 		  free(savedName);
 		}
-	| INT16
+    	| YINT16
 		{ $$ = newExpNode(InterK);
 		  savedName = copyString();
-		  $$->attr.ival = convertI(savedName, 16, 2)
+		  $$->attr.ival = convertI(savedName, 16, 2);
+		  printf("State:");
+		  printToken(yychar);
+		  printf("Name:");
+		  printf("%s\n",savedName);
 		  free(savedName);
 		}
-	| FLO10
+    	| YFLO10
 		{ $$ = newExpNode(FloK);
 		  savedName = copyString();
 		  $$->attr.fval = convertF(savedName, 10, 0);
+		  printf("State:");
+		  printToken(yychar);
+		  printf("Name:");
+		  printf("%s\n",savedName);
 		  free(savedName);
 		}
-	| FLO8
+    	| YFLO8
 		{ $$ = newExpNode(FloK);
 		  savedName = copyString();
 		  $$->attr.fval = convertF(savedName, 8, 1);
+                  printf("State:");
+		  printToken(yychar);
+		  printf("Name:");
+		  printf("%s\n",savedName);
 		  free(savedName);
 		}
-	| FLO16
+    	| YFLO16
 		{ $$ = newExpNode(FloK);
 		  savedName = copyString();
 		  $$->attr.fval = convertF(savedName, 16, 2);
+                  printf("State:");
+		  printToken(yychar);
+		  printf("Name:");
+		  printf("%s\n",savedName);
 		  free(savedName);
 		}
-	| ID
+    	| YID
 		{ $$ = newExpNode(IdK);
 		  $$->attr.name = copyString();
+                  printf("State:");
+		  printToken(yychar);
 		}
-	| ERROR
-		{ $$ = NULL;}
-	;
+    	| YERROR
+		{$$ = NULL;}
+    	;
 
 %%
 
@@ -178,15 +234,14 @@ int yyerror( char * message ){
 	printf("Syntax error %s\n",message);
 	printf("Current token: ");
 	printToken(yychar);
-	Error = True;
 	return 0;
 }
 
-static int yylex( void ){
+int yylex( void ){
 	return getToken();
 }
 
-TreeNode * parse( void ){
-	yyparse();
-	return savedTree;
+TreeNode * parse(void)
+{ yyparse();
+  return savedTree;
 }

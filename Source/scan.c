@@ -9,7 +9,7 @@ int string_position = 0;
 
 /* 建立token类型表*/
 /* 添加了三个新关键字: end, in, out*/
-const char * tokenTable[28]={"", "WHILE", "IF", "THEN", "ELSE", "DO", "END", "IN", "OUT",
+const char * tokenTable[28]={"EOF", "WHILE", "IF", "THEN", "ELSE", "DO", "END", "IN", "OUT",
                     "PLUS", "MINUS", "TIMES", "DIVID", "LP", "RP", "EQUAL", "ASIGN", "LT", "GT", "SEMI",
                     "INT10", "INT8", "INT16",
                     "FLO10", "FLO8", "FLO16",
@@ -150,11 +150,11 @@ TokenType getToken(){
                     else if( convert==')')  current_state = Rp;
                     else if( convert=='<')  current_state = Lt;
                     else if( convert=='>')  current_state = Gt;
+                    else if( convert=='=')  current_state = Assign; /*Assign 即是完成状态又是中间状态*/
                     else                    current_state = Semi;
                         
                     accept = True;
                 }
-                else if( convert=='=' ) current_state = Assign;/*Assign 即是完成状态又是中间状态*/
                 else if( convert=='\n' || convert=='\t' || convert==' ' || convert=='\r'){
                     //keep fetching.
                     save = False;
@@ -538,8 +538,9 @@ TokenType getToken(){
 
     }
 
-    printToken(current_state);
-    printString();
+    //printToken(current_state);
+    //printString();
 
-
+    int token_number = current_state;
+    return token_number;
 }
