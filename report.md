@@ -102,3 +102,99 @@ switch(state){
 			break;
 }
 ```
+
+
+
+### 语法分析子系统
+
+
+
+#### 语法分析方法描述
+
+语法分析通过读取 token string 以及 相关文法，对token string是否合法进行判断，同时构建语法分析树。本项目采用递归下降算法实现语法分析与语法分析树的搭建，同时也实现了基于Yacc的 LALR(1)语法分析，并未整合到项目中，具体编写可以进入项目文件夹--Yacc 打开toy.y 查看。
+
+**相关BNF语法**
+
+start -->	statement_sequence
+
+statement_sequence -->	statement; statement_sequence| statement
+
+statement --> if-stm | while-stm | in-stm | out-stm | assign-stm
+
+if-stm --> `if` exp `then` statement_sequence `end`
+
+​				| `if` exp `then` statement_sequence `else` statement_sequence `end`
+
+while-stm -->	`while` exp `do` statement_sequence `end`
+
+in-stm -->	`in` `ID`
+
+out-stm --> `out` `ID`
+
+​					| `out` `number`
+
+assign-stm --> `ID` `=` exp
+
+exp -->	exp1 compare exp1 | exp1 equal exp1 | exp1
+
+equal -->	`==`
+
+compare -->	`>` | `<`
+
+exp1 -->	exp2 addop exp2 | exp2
+
+addop -->	`+` | `-`
+
+exp2 -->	exp3 mulop exp3 | exp3
+
+mulop -->	`*` | `/`
+
+exp3 -->	`(` exp `)` | `INT10` | `INT8` | `INT16` | `FLO10` | `FLO8` | `FLO16` | `ID`
+
+此文法已经去除左递归，可用于递归下降语法分析算法的编写。
+
+#### 主要数据结构和算法
+
+```c
+/********Parser Part TreeNode Structure********/
+typedef enum {StmtK,ExpK} NodeKind;
+typedef enum {IfK,WhileK,AssignK,InK,OutK} StmtKind;
+typedef enum {OpK,InterK,FloK,IdK} ExpKind;
+
+/* ExpType is used for type checking */
+typedef enum {Void,Integer,Float} ExpType;
+
+#define MAXCHILDREN 3
+
+typedef struct treeNode{ 
+    struct treeNode * child[MAXCHILDREN];
+    struct treeNode * sibling;
+    NodeKind nodekind;
+    union { StmtKind stmt; ExpKind exp;} kind;
+    union { TokenType op;
+             int ival;
+             float fval;
+             char * name;
+    }attr;
+    ExpType type; /* for type checking of exps */
+}TreeNode;
+```
+
+根据BNF语法消除左递归后，进行递归下降。
+
+```c
+/* 大体结构 */
+
+TreeNode * s(){
+	match(token);
+	s_q();
+	match(token);
+}
+
+TreeNode * s_q(){
+	match(token)
+	t->newNode();
+	return t;
+}
+```
+
