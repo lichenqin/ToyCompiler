@@ -49,6 +49,11 @@ typedef enum {OpK,InterK,FloK,IdK} ExpKind;
 /* ExpType is used for type checking */
 typedef enum {Void,Integer,Float} ExpType;
 
+/* Why compiler needs Void type In ExpType? */
+/* I think the reason is that compiler doesn't know which kind of identifier is. */
+/* This grammar is context-free grammar, so the parser doesn't which kind of the identifier is. */
+/* So ExpType needs Void for identifier. */
+
 #define MAXCHILDREN 3
 
 typedef struct treeNode{ 
