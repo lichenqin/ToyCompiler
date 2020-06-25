@@ -5,7 +5,6 @@
 暂时有三个文件夹:
 
 - Source中是源码部分
-- Test是测试部分 因为Linux上要写cmake太麻烦 所以写在一个test.c里测试
 - Yacc中保存了 `toy language` 的Yacc实现语法和 `toy.y` 
 
 Source中有:
@@ -16,13 +15,6 @@ Source中有:
 - parse.h 声明parse过程用到的函数
 - parse.c 实现 其中parse()最重要
 - main.c 主函数 串连scanner parser code三部分
-- etc
-
-Test中有:
-
-- test.c
-- test 编译生成的可执行文件
-- leec.tiny 测试用文件
 - etc
 
 Yacc中有:
